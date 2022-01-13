@@ -48,7 +48,7 @@ namespace WarframeRelicsHelper
             };
         }
 
-        public bool UpdateRelic(int playerId, string relicText)
+        public async Task<bool> UpdateRelic(int playerId, string relicText)
         {
             if(playerId >= 0 && playerId <= 3)
             {
@@ -63,6 +63,11 @@ namespace WarframeRelicsHelper
                     return false;
                 }
                 this.relics[playerId] = new Relic(playerId, relicType, relicSplit[1]);
+                for (int i = 0; i < this.relics[playerId].Rewards.Count; i++)
+                {
+                    this.relics[playerId].Rewards[i].PlatiniumValue = await Reward.FetchAveragePlatiniumValue(this.relics[playerId].Rewards[i]); 
+                }
+                this.listBoxes[playerId].DataContext = this.relics[playerId].Rewards;
                 this.listBoxes[playerId].ItemsSource = this.relics[playerId].Rewards;
             }
             return true;

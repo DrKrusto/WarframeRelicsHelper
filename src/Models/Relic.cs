@@ -39,10 +39,11 @@ namespace WarframeRelicsHelper.src.Models
 
         private List<Reward> FetchRewardsByHtmlParsing()
         {
-            List<Reward> rewards = new List<Reward>();
             string url = $"https://warframe.fandom.com/wiki/{relicType.ToString()}_{relicExtension}";
+            List<Reward> rewards = new List<Reward>();
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument? htmlDoc = htmlWeb.Load(url);
+            if (htmlDoc is null) throw new Exception("ERROR: Couldn't fetch the HTML of the Warframe Wiki!");
             HtmlNode rewardTableNode = htmlDoc
                 .DocumentNode
                 .SelectSingleNode
@@ -61,7 +62,7 @@ namespace WarframeRelicsHelper.src.Models
                     rewardRarity = Convert.ToDouble(node.SelectSingleNode("td[3]/span[1]").InnerText.Split("(")[1].Trim(')', '%').Replace('.', ','));
                     lastRewardRarity = rewardRarity;
                 }
-                rewards.Add(new Reward(rewardName, 0, ducatValue, rewardRarity));
+                rewards.Add(new Reward(rewardName, ducatValue, rewardRarity));
             }
             return rewards;
         }
