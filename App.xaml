@@ -6,7 +6,14 @@
     <Application.Resources>
         <DataTemplate x:Key="RewardTemplate">
             <Grid>
-                <TextBlock Text="{Binding Name}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" Grid.Column="0" />
+                <TextBlock Text="{Binding DucatValue}" Foreground="Gold" Grid.Column="1" Margin="5,0,0,0"/>
+                <TextBlock Text="{Binding RarityToString}" Grid.Column="2" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
     </Application.Resources>

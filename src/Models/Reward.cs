@@ -24,6 +24,7 @@ namespace WarframeRelicsHelper.src.Models
         public string Name { get => this.name; }
         public int PlatiniumValue { get => this.platiniumValue;}
         public int DucatValue { get => this.ducatValue;}
+        public string RarityToString { get => $"{Convert.ToString(this.lootChance)}%"; }
         public double LootChance { get => this.lootChance;}
     }
 }
